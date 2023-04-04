@@ -1,26 +1,22 @@
-from flask import Flask, render_template, request, jsonify
-import requests
+from flask import Flask, render_template
+from forms import TickerForm
+from tickers import ticker_list, add_holding, portfolio_dict
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your_secret_key_here'
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    ticker_form = TickerForm()
+    if ticker_form.validate_on_submit():
+        ticker = ticker_form.ticker.data
+        quantity = ticker_form.quantity.data
+        add_holding(ticker, quantity)
+        ticker_form.ticker.data = ''
+        ticker_form.quantity.data = ''
+        
+    return render_template('index.html', ticker_form=ticker_form, ticker_list=ticker_list, portfolio_dict=portfolio_dict)
 
-@app.route('/results', methods=['POST'])
-def results():
-    tickers = request.form['tickers']
-    amounts = request.form['amounts']
-    # Call the Yahoo finance API to get descriptions of the user's holdings
-    # and return the results to the user
-    api_url = f"https://finance.yahoo.com/quote/{tickers}/analysis?p={tickers}"
-    response = requests.get(api_url)
-    response_json = response.json()
-    results = []
-    for ticker, amount in zip(tickers.split(','), amounts.split(',')):
-        description = response_json['description']
-        results.append(f"{ticker}: {description}")
-    return jsonify(results=results)
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
+

@@ -1,31 +1,19 @@
-<form action="{{ url_for('results') }}" method="post">
-    <label for="tickers">Tickers:</label>
-    <input type="text" name="tickers" id="tickers">
-    <label for="amounts">Amounts:</label>
-    <input type="text" name="amounts" id="amounts">
-    <input type="submit" value="Get Results">
-</form>
+{% extends "base.html" %}
+{% block content %}
+{% if ticker_list %}
+    <h1>Stock holdings:</h1>
+    {% for ticker in ticker_list %}
+        <p>{{ ticker }}: {{ portfolio_dict[ticker] }}</p>
+    {% endfor %}
+{% else %}
+    <p>Start by adding your first holding!</p>
+{% endif %}
 
-<div id="results"></div>
-
-<script>
-const form = document.querySelector('form');
-const resultsDiv = document.querySelector('#results');
-
-form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const formData = new FormData(form);
-    const response = await fetch('/results', {
-        method: 'POST',
-        body: formData,
-    });
-    const data = await response.json();
-    const resultsList = document.createElement('ul');
-    data.results.forEach((result) => {
-        const resultItem = document.createElement('li');
-        resultItem.innerText = result;
-        resultsList.appendChild(resultItem);
-    });
-    resultsDiv.appendChild(resultsList);
-});
-</script>
+    <h1>Enter your stock holdings:</h1>
+    <form method="POST" action="{{ url_for('index') }}">
+        {{ ticker_form.hidden_tag() }}
+        {{ ticker_form.ticker.label }} {{ ticker_form.ticker }}
+        {{ ticker_form.quantity.label }} {{ ticker_form.quantity }}
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}
