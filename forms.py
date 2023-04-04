@@ -9,3 +9,7 @@ class TickerForm(FlaskForm):
   quantity = StringField("Quantity", validators=[DataRequired()])
   submit = SubmitField("Add Sticker")
 
+class PortfolioForm(FlaskForm):
+  
+  submit = SubmitField("Calculate Portfolio")
+

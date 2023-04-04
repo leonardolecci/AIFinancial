@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Your Portfolio:</h1>
+    {% if portfolio_dict %}
+        <table>
+            <tr>
+                <th>Ticker</th>
+                <th>Quantity</th>
+            </tr>
+            {% for ticker in ticker_list %}
+                <tr>
+                    <td>{{ ticker }}</td>
+                    <td>{{ portfolio_dict[ticker] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Start by adding your first holding!</p>
+    {% endif %}
+{% endblock %}

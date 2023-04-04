@@ -10,10 +10,14 @@
 {% endif %}
 
     <h1>Enter your stock holdings:</h1>
-    <form method="POST" action="{{ url_for('index') }}">
+    <form method="POST" action="/">
         {{ ticker_form.hidden_tag() }}
         {{ ticker_form.ticker.label }} {{ ticker_form.ticker }}
         {{ ticker_form.quantity.label }} {{ ticker_form.quantity }}
-        <input type="submit" value="Submit">
+        {{ ticker_form.submit() }}
+    </form>
+    <form method="POST" action="/portfolio">
+        {{ portfolio_form.hidden_tag() }}
+        {{ portfolio_form.submit() }}
     </form>
 {% endblock %}
