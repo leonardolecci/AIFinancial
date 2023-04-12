@@ -6,16 +6,41 @@
             <tr>
                 <th>Ticker</th>
                 <th>Quantity</th>
+                <th>Weight</th>
+                <th>Returns</th>
             </tr>
             {% for ticker in ticker_list %}
                 <tr>
                     <td>{{ ticker }}</td>
                     <td>{{ portfolio_dict[ticker] }}</td>
+                    <td>{{ '%.3f%%'|format(weights[ticker]*100) }}</td>
+                    <td>{{ '%.3f%%'|format(avg_returns[ticker]*100) }}</td>
                 </tr>
             {% endfor %}
         </table>
         <h2>Stock Returns:</h2>
-        {{stock_returns}}
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    {% for col in monthly_returns.columns %}
+                        <th>{{ col[0] }} {{ col[1] }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in range(monthly_returns.shape[0]) %}
+                    <tr>
+                        <td>{{ monthly_returns.index[i].strftime('%Y-%m-%d') }}</td>
+                        {% for j in range(monthly_returns.shape[1]) %}
+                            <td>{{ '%.3f%%'|format(monthly_returns.iloc[i,j]*100) }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        
     {% else %}
         <p>Start by adding your first holding!</p>
     {% endif %}

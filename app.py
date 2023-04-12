@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from forms import TickerForm, PortfolioForm
 from tickers import ticker_list, add_holding, portfolio_dict
-from portfolioOptimizer import calculate_monthly_returns
+from portfolioOptimizer import get_prices, get_weights, get_returns, get_average_total_returns, get_average_monthly_returns
 
 
 app = Flask(__name__)
@@ -23,10 +23,14 @@ def index():
 
 @app.route('/portfolio', methods=['GET', 'POST'])
 def portfolio():
-    stock_returns, portfolio_returns, cleaned_weights, sharpe_ratio = calculate_monthly_returns(ticker_list, portfolio_dict)
+    data = get_prices(ticker_list)
+    weights = get_weights(portfolio_dict)
+    monthly_returns = get_returns(data, weights)
+    avg_returns = get_average_total_returns(data, ticker_list)
+
     portfolio_form = PortfolioForm()
     if portfolio_form.validate_on_submit():
-        return render_template('portfolio.html', portfolio_dict=portfolio_dict, ticker_list=ticker_list, stock_returns=stock_returns, portfolio_returns=portfolio_returns, cleaned_weights=cleaned_weights, sharpe_ratio=sharpe_ratio)
+        return render_template('portfolio.html', portfolio_dict=portfolio_dict, ticker_list=ticker_list, data = data, weights = weights,  monthly_returns=monthly_returns, avg_returns = avg_returns, portfolio_form=portfolio_form)
     return render_template('index.html', portfolio_form=portfolio_form)
 
 if __name__ == "__main__":
