@@ -1,0 +1,133 @@
+/* Global styles */
+
+body {
+    font-family: "Open Sans", sans-serif;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    margin-top: 0;
+    }
+    
+    a {
+    color: #1a1a1a;
+    }
+    
+    button {
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: #0077ff;
+    color: #fff;
+    }
+    
+    /* Landing page styles */
+    
+    .landing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    }
+    
+    .landing-header {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #1a1a1a;
+    }
+    
+    .landing-description {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+    color: #666666;
+    }
+    
+    .holding-container {
+    margin-top: 40px;
+    width: 100%;
+    }
+    
+    .holding-header {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #1a1a1a;
+    }
+    
+    .holding {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .holding-ticker {
+    font-size: 1.5rem;
+    font-weight: 500;
+    }
+    
+    .holding-quantity {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #0077ff;
+    }
+    
+    .empty-portfolio-message {
+    font-size: 1.5rem;
+    margin-top: 40px;
+    color: #666666;
+    }
+    
+    .form-container {
+    margin-top: 40px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+    
+    .form-header {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #1a1a1a;
+    }
+    
+    .input-container {
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    }
+    
+    input[type="text"], input[type="number"], input[type="date"] {
+    font-size: 1.2rem;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #f0f0f0;
+    width: 100%;
+    }
+    
+    input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus {
+    outline: none;
+    border: 2px solid #0077ff;
+    }
+    
+    .submit-button {
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: #0077ff;
+    color: #fff;
+    }
+    
+    .submit-button:hover {
+    background-color: #0055cc;
+    }
