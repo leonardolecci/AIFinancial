@@ -27,14 +27,14 @@ def index():
 
 @app.route('/portfolio', methods=['GET', 'POST'])
 def portfolio():
-    data = get_prices(ticker_list)
+    data = get_prices(ticker_list, purchase_date_dict, sales_date_dict)
     weights = get_weights(portfolio_dict)
     monthly_returns = get_returns(data, weights)
     avg_returns = get_average_total_returns(data, ticker_list)
 
     # create a line chart for each column (except the first, which is the date index)
     fig = go.Figure()
-    for col in monthly_returns.columns[1:]:
+    for col in monthly_returns.columns[0:]:
         fig.add_trace(go.Scatter(x=monthly_returns.index, y=monthly_returns[col], name=col[0] + " " + col[1]))
 
     # set the chart layout

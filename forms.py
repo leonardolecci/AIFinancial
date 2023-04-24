@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, RadioField
+from wtforms import StringField, SubmitField, TextAreaField, RadioField, DateField
 from wtforms.validators import DataRequired
 
 
@@ -7,8 +7,8 @@ from wtforms.validators import DataRequired
 class TickerForm(FlaskForm):
   ticker =  StringField("Sticker", validators=[DataRequired()])
   quantity = StringField("Quantity", validators=[DataRequired()])
-  date_purchased = StringField("Date Purchased", validators=[DataRequired()])
-  date_sold = StringField("Date Sold", validators=[DataRequired()])
+  date_purchased = DateField("Date Purchased", validators=[DataRequired()])
+  date_sold = DateField("Date Sold")
   submit = SubmitField("Add Sticker")
 
 class PortfolioForm(FlaskForm):

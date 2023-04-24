@@ -1,53 +1,25 @@
 {% extends "base.html" %}
-
-{% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='https://github.com/leonardolecci/AIFinancial/blob/main/static/img/js/css/style.css') }}">
-{% endblock %}
-
 {% block content %}
-    <div class="landing-container">
-        <h1 class="landing-header">Welcome to AI Financial</h1>
-        <p class="landing-description">Manage your stock holdings and track your portfolio with ease</p>
+{% if ticker_list %}
+    <h1>Stock holdings:</h1>
+    {% for ticker in ticker_list %}
+        <p>{{ ticker }}: {{ portfolio_dict[ticker] }}</p>
+    {% endfor %}
+{% else %}
+    <p>Start by adding your first holding!</p>
+{% endif %}
 
-        {% if ticker_list %}
-            <div class="holding-container">
-                <h2 class="holding-header">Stock holdings:</h2>
-                {% for ticker in ticker_list %}
-                    <div class="holding">
-                        <span class="holding-ticker">{{ ticker }}</span>
-                        <span class="holding-quantity">{{ portfolio_dict[ticker] }}</span>
-                    </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <p class="empty-portfolio-message">Start by adding your first holding!</p>
-        {% endif %}
-
-        <div class="form-container">
-            <h2 class="form-header">Enter your stock holdings:</h2>
-            <form method="POST" action="/">
-                {{ ticker_form.hidden_tag() }}
-                <div class="input-container">
-                    {{ ticker_form.ticker.label }} {{ ticker_form.ticker }}
-                    {{ ticker_for.ticker.errors }}
-                </div>
-                <div class="input-container">
-                    {{ ticker_form.quantity.label }} {{ ticker_form.quantity }}
-                    {{ ticker_form.quantity.errors }}
-                </div>
-                <div class="input-container">
-                    {{ ticker_form.date_purchased.label }} {{ ticker_form.date_purchased }}
-                </div>
-                <div class="input-container">
-                    {{ ticker_form.date_sold.label }} {{ ticker_form.date_sold }}
-                </div>
-                <button class="submit-button" type="submit">Add Holding</button>
-            </form>
-            <form method="POST" action="/portfolio">
-                {{ portfolio_form.hidden_tag() }}
-                <button class="submit-button" type="submit">View Portfolio</button>
-            </form>
-        </div>
-    </div>
+    <h1>Enter your stock holdings:</h1>
+    <form method="POST" action="/">
+        {{ ticker_form.hidden_tag() }}
+        {{ ticker_form.ticker.label }} {{ ticker_form.ticker }}
+        {{ ticker_form.quantity.label }} {{ ticker_form.quantity }}
+        {{ ticker_form.date_purchased.label }} {{ ticker_form.date_purchased }}
+        {{ ticker_form.date_sold.label }} {{ ticker_form.date_sold }}
+        {{ ticker_form.submit() }}
+    </form>
+    <form method="POST" action="/portfolio">
+        {{ portfolio_form.hidden_tag() }}
+        {{ portfolio_form.submit() }}
+    </form>
 {% endblock %}
-
